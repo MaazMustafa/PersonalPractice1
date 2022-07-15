@@ -1,0 +1,58 @@
+﻿<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Greet</title>
+    <script>
+        function makeReq() {
+            obj = createAjaxObject();
+            if (obj) {
+                alert("ajax object created");
+            }
+            obj.onreadystatechange = updatePage;
+
+            var u = "http://localhost:7000/example?nm=" + document.f1.nm.value;
+            alert(u);
+            obj.open('GET', u, true);
+
+            obj.send("");
+
+        }
+        function updatePage() {
+            alert(obj.readyState);
+            if (obj.readyState == 4) {
+                document.getElementById("div1").innerHTML = obj.responseText;
+            }
+        }
+
+        function updatestate() {
+
+        }
+
+        function createAjaxObject() {
+            try {
+                var ajax = new ActiveXObject("Microsoft.XMLHTTP");
+                return ajax;
+            }
+            catch (e) {
+                try {
+                    var ajax = new XMLHttpRequest();
+                    return ajax;
+                }
+                catch (e) {
+                    alert("No Response");
+                }
+            }
+        }
+    </script>
+</head>
+<body >
+    <form name="f1">
+        Enter Your name : <input type="text" name="nm" />
+        <br/>
+        <input type="button" value="Greet" onclick="makeReq()" />
+    </form>
+    <div id="div1"></div>
+</body>
+</html>
